@@ -573,7 +573,7 @@ begin
   else
   begin
    if FPassword <> '' then
-        Result := IMAPcommand('LOGIN "' + EscapeSpecialCharacters(FUsername) + '" "' + EscapeSpecialCharacters(FPassword) + '"') = 'OK'
+      Result := IMAPcommand('LOGIN "' + EscapeSpecialCharacters(FUsername) + '" "' + EscapeSpecialCharacters(FPassword) + '"') = 'OK'
     else
       Result := False;
   end;
@@ -945,3 +945,4 @@ end;
 {==============================================================================}
 
 end.
+
