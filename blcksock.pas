@@ -1255,6 +1255,7 @@ type
     FVerifyCert: Boolean;
     FUsername: string;
     FPassword: string;
+    FOAuth2Token: string;
     FSSHChannelType: string;
     FSSHChannelArg1: string;
     FSSHChannelArg2: string;
@@ -1382,6 +1383,9 @@ type
 
     {:password for possible credentials.}
     property Password: string read FPassword write FPassword;
+
+    {:oauth2 token for possible credentials.}
+    property OAuth2Token: string read FOAuth2Token Write FOAuth2Token;
 
     {:By this property you can modify default set of SSL/TLS ciphers.}
     property Ciphers: string read FCiphers write FCiphers;
