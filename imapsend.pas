@@ -276,6 +276,9 @@ type
 
 implementation
 
+uses
+  synacode;
+
 constructor TIMAPSend.Create;
 begin
   inherited Create;
@@ -557,8 +560,23 @@ begin
 end;
 
 function TIMAPSend.AuthLogin: Boolean;
+var
+  request, encoded, response: string;
 begin
-  Result := IMAPcommand('LOGIN "' + EscapeSpecialCharacters(FUsername) + '" "' + EscapeSpecialCharacters(FPassword) + '"') = 'OK'
+  if FOAuth2Token <> '' then
+  begin
+    request := 'user=' + FUsername + Chr(1) + 'auth=Bearer ' + FOAuth2Token + Chr(1) + Chr(1);
+    encoded := EncodeBase64(request);
+    response := IMAPcommand('AUTHENTICATE XOAUTH2 ' + encoded);
+    Result := (response = 'OK');
+  end
+  else
+  begin
+   if FPassword <> '' then
+        Result := IMAPcommand('LOGIN "' + EscapeSpecialCharacters(FUsername) + '" "' + EscapeSpecialCharacters(FPassword) + '"') = 'OK'
+    else
+      Result := False;
+  end;
   if Result then
     FAuthDone := True;
 end;
